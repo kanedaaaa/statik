@@ -20,14 +20,24 @@ const parse = async () => {
       const tag = match[2];
       const content = match[3];
 
+      if (indent % 2 !== 0) {
+        console.error(`Indent Error: Each indent should be 2 spaces`)
+        return
+      }
+
       if (!isTag(tag)) {
-        console.error("tag error");
+        console.error(`Tag Error: ${tag} is not a valid tag`);
         return;
       }
 
       const node: Node = { tag, content, children: [] };
 
       const last = Stack.at(-1);
+      
+      if (last?.node && indent - 2 !== last.indent) {
+        console.error(`Indent Error: Children shold be 2 spaces away from parent`)
+        return
+      }
 
       if (!last) {
         Root.push(node)
