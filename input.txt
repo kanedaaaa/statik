@@ -1,5 +1,5 @@
 h1 Welcome
-p  This is some text.
+p This is some text.
 ul
-    li Item one
+  li Item one
   li Item two
