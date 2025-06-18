@@ -25,9 +25,8 @@ const run = async () => {
     return;
   }
 
-  const html = await generateHTML(path);
-
-  console.log(html);
+  await generateHTML(path);
+  console.log("Done");
 };
 
 run();

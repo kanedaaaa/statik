@@ -13,7 +13,7 @@ const generateHTML = async (statikPath: string) => {
 
   exploreTree(tree);
 
-  return generatedHTML;
+  await Deno.writeTextFile("./build/index.html", generatedHTML);
 };
 
 const exploreTree = (tree: Node[]) => {
