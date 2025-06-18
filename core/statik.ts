@@ -1,8 +1,9 @@
-type TagTypes = "h1" | "p" | "ul" | "li";
+type TagTypes = "h1" | "p" | "ul" | "li" | "title";
 
 export type Node = { tag: string; content: string; children: Node[] | null };
 const Stack: { node: Node; indent: number }[] = [];
 const Root: Node[] = [];
+let Title = "";
 
 const isTag = (tag: string): tag is TagTypes => {
   return ["h1", "p", "ul", "li"].includes(tag);
@@ -11,7 +12,7 @@ const isTag = (tag: string): tag is TagTypes => {
 const parse = (statik: string) => {
   const code = statik.split("\n");
 
-  for (const line of code) {
+  for (const [index, line] of code.entries()) {
     // ^(\s*)(\w+)\s*(.*?)\s*$ - could be better idk
     const match = line.match(/^(\s*)(\w+)\s*(.*)$/);
 
@@ -23,6 +24,14 @@ const parse = (statik: string) => {
       if (indent % 2 !== 0) {
         console.error(`Indent Error: Each indent should be 2 spaces`);
         return;
+      }
+
+      if (index === 0 && tag !== "title") {
+        console.error(`Tag Error: Title missing`);
+        return;
+      } else if (index === 0 && tag === "title") {
+        Title = content;
+        continue;
       }
 
       if (!isTag(tag)) {
@@ -67,4 +76,4 @@ const parse = (statik: string) => {
   return Root;
 };
 
-export { parse };
+export { parse, Title };
