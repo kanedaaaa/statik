@@ -11,7 +11,31 @@ const generateHTML = async (statikPath: string) => {
     return;
   }
 
+  const head = `
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Page Title</title>
+</head>
+  `;
+
+  generatedHTML = generatedHTML.concat(
+    `
+<!DOCTYPE html>
+<html lang=en>
+${head} 
+<body>
+`,
+  );
+
   exploreTree(tree);
+
+  generatedHTML = generatedHTML.concat(
+    `
+</body>
+</html
+    `,
+  );
 
   await Deno.writeTextFile("./build/index.html", generatedHTML);
 };
