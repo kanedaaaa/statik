@@ -1,6 +1,6 @@
 type TagTypes = "h1" | "p" | "ul" | "li";
 
-type Node = { tag: string; content: string; children: Node[] | null };
+export type Node = { tag: string; content: string; children: Node[] | null };
 const Stack: { node: Node; indent: number }[] = [];
 const Root: Node[] = [];
 
@@ -67,4 +67,4 @@ const parse = (statik: string) => {
   return Root;
 };
 
-export default parse;
+export { parse };

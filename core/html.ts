@@ -1,9 +1,9 @@
-import parse from "./statik.ts";
+import { Node, parse } from "./statik.ts";
 
 let generatedHTML = "";
 
-const generateHTML = async () => {
-  const statik = await Deno.readTextFile("input.txt");
+const generateHTML = async (statikPath: string) => {
+  const statik = await Deno.readTextFile(statikPath);
 
   const tree = parse(statik);
 
@@ -13,12 +13,12 @@ const generateHTML = async () => {
 
   exploreTree(tree);
 
-  console.log(generatedHTML);
+  return generatedHTML;
 };
 
-const exploreTree = (tree: any[]) => {
+const exploreTree = (tree: Node[]) => {
   for (const item of tree) {
-    if (item.children.length > 0) {
+    if (item.children && item.children.length > 0) {
       generatedHTML = generatedHTML.concat(
         `<${item.tag}>`,
         "\n",
@@ -37,4 +37,4 @@ const exploreTree = (tree: any[]) => {
   }
 };
 
-generateHTML();
+export default generateHTML;
